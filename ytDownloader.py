@@ -3,6 +3,18 @@ from tkinter import *
 from PIL import Image, ImageTk
 from tkinter import filedialog
 
+
+def download_video():
+    link= link_field.get()
+    youtube_object = YouTube(link)
+    youtube_object = youtube_object.streams.get_highest_resolution()
+    try:
+        youtube_object.download()
+    except:
+        print('Cannot found video')
+    print('Download Completed')
+
+
 screen = Tk()
 title = screen.title('YouTube Downloader')
 canvas = Canvas(screen, width=500, height=300)
@@ -19,18 +31,11 @@ link_label = Label(screen, text="Put your link here")
 
 canvas.create_window(100, 100, window=link_label)
 canvas.create_window(100, 140, window=link_field)
+
+download_button=Button(screen,text="DOWNLOAD",command=download_video)
+canvas.create_window(100,200,window=download_button)
 screen.mainloop()
 
 
-def download_video(link):
-    youtube_object = YouTube(link)
-    youtube_object = youtube_object.streams.get_highest_resolution()
-    try:
-        youtube_object.download()
-    except:
-        print('Cannot found video')
-    print('Download Completed')
 
 
-link = input('Put your link here: ')
-download_video(link)
