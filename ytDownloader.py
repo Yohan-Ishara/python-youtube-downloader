@@ -1,7 +1,7 @@
 from pytube import YouTube
 from tkinter import *
-from PIL import Image, ImageTk
 from tkinter import filedialog
+from PIL import Image, ImageTk
 
 
 def download_video():
@@ -9,7 +9,9 @@ def download_video():
     youtube_object = YouTube(link)
     youtube_object = youtube_object.streams.get_highest_resolution()
     try:
-        youtube_object.download()
+        output_path = filedialog.askdirectory()
+        youtube_object.download(output_path)
+
     except:
         print('Cannot found video')
     print('Download Completed')
